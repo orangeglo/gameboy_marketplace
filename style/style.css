@@ -36,8 +36,27 @@
   background-color: #4d6cda;
 }
 
+.btn-info:focus {
+  border-color: #4d6cda;
+  background-color: #4d6cda;
+}
+
 .no-image {
   height: 100%;
   width: 100%;
   background-color: lightgrey;
+}
+
+.pull-right {
+  float: right;
+}
+
+.created {
+  font-size: 0.75em;
+  position: relative;
+  top: 14px;
+}
+
+img.discord-avatar {
+  border-radius: 50%;
 }

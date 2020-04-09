@@ -31,13 +31,16 @@ Vue.component('listing-card', {
               <span v-if="unknown" class="badge badge-secondary">???</span>
               Card title
               <small class="text-muted">by {{listing.user()}}</small>
-              <button class="btn btn-sm btn-light" style="float: right" @click="toggleExpanded">
+              <img width="30" class="discord-avatar" :src="listing.avatarUrl">
+
+              <button class="btn btn-sm btn-light pull-right" @click="toggleExpanded">
                 {{ expanded ? 'Collapse ▲' : ' Expand ▼' }}
               </button>
             </h5>
             <p class="card-text listing-text">{{listing.text()}}</p>
-            <p class="card-text text-right">
-              <a href="#" class="btn btn-sm btn-info">Open In Discord</a>
+            <p class="card-text">
+              <span class="text-muted created">{{ listing.created }}</span>
+              <span class="pull-right"><a :href="listing.discordUrl()" target="_blank" class="btn btn-sm btn-info">Open In Discord</a></span>
             </p>
           </div>
         </div>

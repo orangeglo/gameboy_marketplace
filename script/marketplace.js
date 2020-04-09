@@ -1,6 +1,7 @@
 const DATA_URL = 'https://gameboy.github.io/dmgAPI/market.json'
 const BUY_REGEX = /buying|WTB|looking for/ig
 const SELL_REGEX = /selling|WTS/ig
+const BASE_DISCORD_URL = "https://discordapp.com/channels/246604458744610816/336895311081373707/" // just add message_id
 
 class DataFetcher {
   cachedListings() {
@@ -32,6 +33,7 @@ class DataFetcher {
   buildListings(jsonData) {
     const listings = []
     for(let i = 0; i < jsonData.length; i++) {
+      console.log("loop")
       listings.push(new Listing(jsonData[i]))
     }
     return listings
@@ -41,6 +43,9 @@ class DataFetcher {
 class Listing {
   constructor(messageData) {
     this.messageData = messageData
+    this.messageId = messageData.message_id
+    this.created = messageData.created
+    this.avatarUrl = messageData.avatar_url
     this.splitMessage = messageData.message.split('\n').map(line => line.split(' ')).flat()
   }
 
@@ -50,6 +55,10 @@ class Listing {
 
   text() {
     return this.messageData.message
+  }
+
+  discordUrl() {
+    return BASE_DISCORD_URL + this.messageId
   }
 
   sell() {
