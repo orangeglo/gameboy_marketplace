@@ -1,0 +1,43 @@
+.card {
+  margin-bottom: 1em;
+}
+
+.card-body:hover {
+  cursor: pointer;
+}
+
+.card-body:hover * {
+  cursor: default;
+}
+
+.card-body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.listing-text {
+  flex-grow: 1;
+  max-height: 100px;
+  overflow: hidden;
+}
+
+.expanded .listing-text {
+  max-height: 10000px;
+}
+
+.btn-info {
+  border-color: #7289DA;
+  background-color: #7289DA;
+}
+
+.btn-info:hover {
+  border-color: #4d6cda;
+  background-color: #4d6cda;
+}
+
+.no-image {
+  height: 100%;
+  width: 100%;
+  background-color: lightgrey;
+}

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Game Boy Discord Marketplace</title>
+    <script src="script/vue.min.js"></script>
+    <script id="devload" src="script/devload.js"></script>
+    <script src="script/marketplace.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="style/style.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Game Boy Discord Marketplace</h1>
+
+      <noscript>
+        Looks like you have JS disabled. This tool needs javascript to function!
+      </noscript>
+
+      <hr>
+      <div id="app">
+        <listing-card v-for="(listing, index) in listings" :listing="listing"></listing-card>
+      </div>
+    </div>
+
+    <script src="script/app.js"></script>
+  </body>
+</html>
