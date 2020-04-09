@@ -33,7 +33,6 @@ class DataFetcher {
   buildListings(jsonData) {
     const listings = []
     for(let i = 0; i < jsonData.length; i++) {
-      console.log("loop")
       listings.push(new Listing(jsonData[i]))
     }
     return listings
@@ -59,6 +58,18 @@ class Listing {
 
   discordUrl() {
     return BASE_DISCORD_URL + this.messageId
+  }
+
+  title() {
+    if (!this._title) {
+      let title = this.messageData.message.split(/\.|\\n|-|,/)[0]
+      if (title.length > 200) {
+        title = title.substring(0, 197) + "...";
+      }
+      this._title = title
+    }
+
+    return this._title
   }
 
   sell() {
