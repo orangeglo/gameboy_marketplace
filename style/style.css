@@ -10,7 +10,11 @@ h1 {
   cursor: pointer;
 }
 
-.card-body:hover * {
+.expanded .card-body:hover {
+  cursor: default;
+}
+
+.expanded .card-body:hover * {
   cursor: default;
 }
 
@@ -22,12 +26,28 @@ h1 {
 
 .listing-text {
   flex-grow: 1;
-  max-height: 100px;
+  max-height: 150px;
   overflow: hidden;
+  margin-bottom: 0;
 }
 
 .expanded .listing-text {
   max-height: 10000px;
+}
+
+.listing-text:before {
+  content:'';
+  width:100%;
+  height:100%;    
+  position:absolute;
+  left:0;
+  top:0;
+  background:linear-gradient(transparent 50px, white);
+  pointer-events:none;
+}
+
+.expanded .listing-text:before {
+  display: none;
 }
 
 .btn-info {
@@ -56,10 +76,18 @@ h1 {
 }
 
 .created {
-  position: relative;
-  top: 14px;
+  font-size: 14px;
+  margin-top: 5px;
 }
 
 img.discord-avatar {
   border-radius: 50%;
+}
+
+.text-bold {
+  font-weight: bold;
+}
+
+.listing-text p {
+  margin-bottom: 0.5em;
 }

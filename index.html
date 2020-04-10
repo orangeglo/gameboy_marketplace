@@ -18,11 +18,13 @@
         Looks like you have JS disabled. This tool needs javascript to function!
       </noscript>
 
-      This is the website for the Game Boy discord's marketplace. All the listings here are items posted in the <code>#marketplace</code> channel.
+      This is the website for the Game Boy discord's marketplace. All the listings here are items pinned in the <code>#marketplace</code> channel.
 
       <hr>
       <div id="app">
-        <listing-card v-for="(listing, index) in listings" :listing="listing"></listing-card>
+        <div >
+        <listing-card :ref="listing.messageId" v-on:close-all="closeAll" v-for="(listing, index) in listings" :listing="listing"></listing-card>
+        </div>
       </div>
     </div>
 

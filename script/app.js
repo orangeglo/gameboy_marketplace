@@ -1,8 +1,8 @@
 Vue.component('listing-card', {
-  props: ['listing'],
+  props: ['listing', 'closeFunction'],
   data: function() {
     return {
-      expanded: false
+      expanded: false,
     }
   },
   computed: {
@@ -11,10 +11,24 @@ Vue.component('listing-card', {
     },
     unknown: function() {
       return (!this.listing.buy() && !this.listing.sell())
+    },
+    bodyHtml: function() {
+      return (this.expanded ? this.listing.expandedHtml() : this.listing.collapsedHtml())
     }
   },
   methods: {
-    toggleExpanded: function() { this.expanded = !this.expanded; }
+    expand: function() {
+      this.$emit('close-all')
+      this.expanded = true
+    },
+    close: function() {
+      this.expanded = false
+    },
+    toggleExpanded: function(e){
+      console.log(this.expanded)
+      this.expanded = !this.expanded
+      e.stopImmediatePropagation()
+    }
   },
   template: `
     <div class="card" :class="{expanded: expanded}">
@@ -24,7 +38,7 @@ Vue.component('listing-card', {
           <img v-if="imageUrl" :src="imageUrl" class="card-img">
         </div>
         <div class="col-md-9">
-          <div class="card-body" @click.self="toggleExpanded">
+          <div class="card-body" @click="expand">
             <h5 class="card-title">
               <div class="row">
                 <div class="col-md-9">
@@ -32,26 +46,31 @@ Vue.component('listing-card', {
                   <span v-if="listing.buy()" class="badge badge-success">Buying</span>
                   <span v-if="unknown" class="badge badge-secondary">???</span>
                   {{listing.title()}}
+
+                  <div class="created">
+                    <span class="text-muted">
+                      posted
+                      {{ listing.created }}
+                      by
+                    </span>
+                    <img width="20" class="discord-avatar" :src="listing.avatarUrl">
+                    <span>{{listing.user()}}</span>
+                  </div>
                 </div>
 
                 <div class="col-md-3">
-                  <button class="btn btn-sm btn-light pull-right" @click="toggleExpanded">
-                    {{ expanded ? 'Collapse ▲' : ' Expand ▼' }}
-                  </button>
+<a :href="listing.discordUrl()" target="_blank" class="btn btn-sm btn-info pull-right">Open In Discord</a>
                 </div>
               </row>
             </h5>
-            <p class="card-text listing-text">{{listing.text()}}</p>
-            <p class="card-text">
-              <span class="created">
-                <img width="30" class="discord-avatar" :src="listing.avatarUrl">
-                <span>{{listing.user()}}</span>
-                @
-                <span class="text-muted">{{ listing.created }}</span>
-              </span>
-
-              <span class="pull-right"><a :href="listing.discordUrl()" target="_blank" class="btn btn-sm btn-info">Open In Discord</a></span>
+            <p class="card-text listing-text" v-html="bodyHtml">
             </p>
+
+            <div style="z-index: 2; text-align: right;">
+              <button class="btn btn-sm btn-outline-secondary" @click="toggleExpanded">
+                {{ expanded ? '▲' : '▼' }}
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -67,5 +86,12 @@ let app = new Vue({
   mounted: async function() {
     const newListings = await (new DataFetcher).refreshListings();
     if (newListings) { this.listings = newListings; }
+  },
+  methods: {
+    closeAll: function() {
+      for (let i = 0; i < this.listings.length; i++) {
+        this.$refs[this.listings[i].messageId][0].close()
+      }
+    }
   }
 });
