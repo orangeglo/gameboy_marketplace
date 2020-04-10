@@ -34,7 +34,7 @@ Vue.component('listing-card', {
       <div class="row no-gutters">
         <div class="col-md-3">
           <div v-if="!imageUrl" class="no-image"></div>
-          <img v-if="imageUrl" :src="imageUrl" class="card-img">
+          <a v-if="imageUrl" :href="imageUrl"><img  :src="imageUrl" class="card-img"></a>
         </div>
         <div class="col-md-9">
           <div class="card-body" @click="expand">
