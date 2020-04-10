@@ -25,7 +25,6 @@ Vue.component('listing-card', {
       this.expanded = false
     },
     toggleExpanded: function(e){
-      console.log(this.expanded)
       this.expanded = !this.expanded
       e.stopImmediatePropagation()
     }

@@ -115,6 +115,14 @@ class Listing {
     if (!this._imageUrls) {
       this._imageUrls = []
 
+      if (this.attachments && this.attachments.length > 0) {
+        if (this.attachments.slice(0,2) == "['") {
+          this._imageUrls.push(this.attachments.slice(2, this.attachments.length - 2))
+        } else {
+          this._imageUrls.push(this.attachments)
+        }
+      }
+
       for (let i = 0; i < this.words.length; i++) {
         const word = this.words[i];
         if (word.match(/.jpg$|.gif$|.png$/g)) {
