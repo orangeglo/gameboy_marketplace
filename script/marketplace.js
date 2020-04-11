@@ -44,7 +44,7 @@ class Listing {
   constructor(messageData) {
     this.messageData = messageData
     this.messageId = messageData.message_id
-    this.created = messageData.created
+    this.created = `${messageData.created.slice(0, messageData.created.length - 7)} UTC`
     this.avatarUrl = messageData.avatar_url
     this.attachments = messageData.attachments
 
@@ -137,7 +137,7 @@ class Listing {
 
   collapsedHtml() {
     if (!this._collapsedHtml) {
-      this._collapsedHtml = '' // this.messageData.message
+      this._collapsedHtml = ''
       for (let i = 0; i < this.splitMessage.length; i++) {
         const line = this.splitMessage[i]
         if (line == "") { this._collapsedHtml += "<br/>" }
@@ -152,7 +152,7 @@ class Listing {
 
   expandedHtml() {
     if (!this._expandedHtml) {
-      this._expandedHtml = '' // this.messageData.message
+      this._expandedHtml = ''
       for (let i = 0; i < this.splitMessage.length; i++) {
         const line = this.splitMessage[i]
         if (line == "") { continue; }
