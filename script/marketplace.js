@@ -20,7 +20,7 @@ class DataFetcher {
         console.log(jsonData);
         if (jsonData.length > 0) {
           localStorage.setItem('listingData', JSON.stringify(jsonData))
-          return this.buildListings(jsonData.slice(0, 10));
+          return this.buildListings(jsonData);
         } else {
           console.log("empty listing data")
           return null;
