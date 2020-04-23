@@ -1,3 +1,58 @@
+Vue.component('filtering', {
+  props: ['listings'],
+  data: function() {
+    return {
+      searchTerm: "",
+      buying: true,
+      selling: true,
+      unknown: true
+    }
+  },
+  computed: {
+    trimmedSearchTerm: function() {
+      return this.searchTerm.trim();
+    }
+  },
+  methods: {
+    emitFilteredListings() {
+      this.$emit(
+        'filtered-listings-updated',
+        this.listings.filter((listing) => {
+          if (this.trimmedSearchTerm.length >= 3) {
+            return this.searchFilter(listing) && this.typeFilter(listing);
+          } else {
+            return this.typeFilter(listing);
+          }
+        })
+      );
+    },
+    typeFilter(listing) {
+      if (this.buying && listing.buy()) { return true }
+      else if (this.selling && listing.sell()) { return true }
+      else if (this.unknown && !listing.buy() && !listing.sell()) { return true }
+      return false;
+    },
+    searchFilter(listing) {
+      return listing.text().match(new RegExp(this.trimmedSearchTerm, 'ig'));
+    }
+  },
+  template: `
+    <div class='filtering'>
+      <div class='search'>
+        <input type='text' v-model:value="searchTerm" placeholder="Enter a search term" class="form-control form-control-sm" @keyup="emitFilteredListings"/>
+      </div>
+      <div class='type-filter'>
+        <input type="checkbox" id="show-selling" v-model="selling" @change="emitFilteredListings"/>
+        <span class="badge badge-primary"><label for="show-selling">Selling</label></span>
+        <input type="checkbox" id="show-buying" v-model="buying" @change="emitFilteredListings"/>
+        <span class="badge badge-success"><label for="show-buying">Buying</label></span>
+        <input type="checkbox" id="show-unknown" v-model="unknown" @change="emitFilteredListings"/>
+        <span class="badge badge-secondary"><label for="show-unknown">???</label></span>
+      </div>
+    </div>
+  `
+});
+
 Vue.component('listing-card', {
   props: ['listing', 'closeFunction'],
   data: function() {
@@ -58,9 +113,9 @@ Vue.component('listing-card', {
                 </div>
 
                 <div class="col-md-3">
-<a :href="listing.discordUrl()" target="_blank" class="btn btn-sm btn-info pull-right">Open In Discord</a>
+                  <a :href="listing.discordUrl()" target="_blank" class="btn btn-sm btn-info pull-right">Open In Discord</a>
                 </div>
-              </row>
+              </div>
             </h5>
             <p class="card-text listing-text" v-html="bodyHtml" ref="text"></p>
 
@@ -79,17 +134,25 @@ Vue.component('listing-card', {
 let app = new Vue({
   el: '#app',
   data: {
-    listings: (new DataFetcher).cachedListings()
+    listings: (new DataFetcher).cachedListings(),
+    filteredListings: null
   },
   mounted: async function() {
+    this.filteredListings = this.listings;
     const newListings = await (new DataFetcher).refreshListings();
-    if (newListings) { this.listings = newListings; }
+    if (newListings) {
+      this.listings = newListings;
+      this.filteredListings = newListings;
+    }
   },
   methods: {
     closeAll: function() {
       for (let i = 0; i < this.listings.length; i++) {
         this.$refs[this.listings[i].messageId][0].close()
       }
+    },
+    updateFilteredListings: function(filteredListings) {
+      this.filteredListings = filteredListings;
     }
   }
 });

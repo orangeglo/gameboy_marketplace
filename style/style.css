@@ -10,6 +10,10 @@ h1 {
   cursor: pointer;
 }
 
+.card .badge {
+  margin-right: 6px;
+}
+
 .expanded .card-body:hover {
   cursor: default;
 }
@@ -90,4 +94,31 @@ img.discord-avatar {
 
 .listing-text p {
   margin-bottom: 0.5em;
+}
+
+.filtering {
+  margin-top: 40px;
+  margin-bottom: 6px;
+  display: flex;
+}
+
+.filtering .search {
+  flex: 1;
+}
+
+.search .form-control {
+  width: 200px;
+}
+
+.filtering .badge {
+  margin-right: 6px;
+}
+
+.filtering label {
+  margin-bottom: 0;
+  cursor: pointer;
+}
+
+hr {
+  margin-top: 0;
 }

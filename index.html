@@ -19,11 +19,13 @@
       </noscript>
 
       This is the website for the Game Boy discord's marketplace. All the listings here are items pinned in the <code>#marketplace</code> channel.
-
-      <hr>
-      <div id="app">
-        <div >
-        <listing-card :ref="listing.messageId" v-on:close-all="closeAll" v-for="(listing, index) in listings" :listing="listing"></listing-card>
+      <div id="app" >
+        <div>
+          <filtering :listings="listings" @filtered-listings-updated="updateFilteredListings"></filtering>
+        </div>
+        <hr>
+        <div>
+          <listing-card :ref="listing.messageId" v-on:close-all="closeAll" v-for="(listing, index) in filteredListings" :listing="listing" :key="listing.messageId"></listing-card>
         </div>
       </div>
     </div>
