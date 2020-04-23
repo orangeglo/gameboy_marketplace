@@ -62,8 +62,7 @@ Vue.component('listing-card', {
                 </div>
               </row>
             </h5>
-            <p class="card-text listing-text" v-html="bodyHtml">
-            </p>
+            <p class="card-text listing-text" v-html="bodyHtml" ref="text"></p>
 
             <div style="z-index: 2; text-align: right;">
               <button class="btn btn-sm btn-outline-secondary" @click="toggleExpanded">

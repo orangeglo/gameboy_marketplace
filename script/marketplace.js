@@ -1,8 +1,8 @@
 const DATA_URL = 'https://gameboy.github.io/dmgAPI/market.json'
 const TITLE_REGEX = /\.|\\n|,/g
-const BUY_REGEX = /buying|WTB|looking for/ig
-const SELL_REGEX = /selling|WTS/ig
-const BASE_DISCORD_URL = "https://discordapp.com/channels/246604458744610816/336895311081373707/" // just add message_id
+const BUY_REGEX = /buy|buying|WTB|looking/ig
+const SELL_REGEX = /sell|selling|WTS/ig
+const BASE_DISCORD_URL = "discord://discordapp.com/channels/246604458744610816/336895311081373707/" // just add message_id
 
 class DataFetcher {
   cachedListings() {
@@ -88,7 +88,7 @@ class Listing {
         }
       }
 
-      if ((this.messageData.message.match(/\$/g) || []).length > 1){
+      if ((this.attachments[0]) || (this.messageData.message.match(/\$/g) || []).length > 1) {
         this._sell = true;
       }
     }
@@ -102,7 +102,7 @@ class Listing {
 
       for (let i = 0; i < this.words.length; i++) {
         const word = this.words[i];
-        if (word.match(BUY_REGEX) && !this.sell()) {
+        if (word.match(BUY_REGEX) && !this.sell()) { // sell can not reference buy or infinite loop will happen!
           this._buy = true;
         }
       }
