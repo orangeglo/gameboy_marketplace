@@ -3,33 +3,11 @@
   <head>
     <meta charset="UTF-8">
     <title>Game Boy Discord Marketplace</title>
-    <script src="script/vue.min.js"></script>
-    <script id="devload" src="script/devload.js"></script>
-    <script src="script/marketplace.js"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="style/style.css" />
+    <meta http-equiv="refresh" content="2; URL=https://gameboy.github.io/marketplace/">
   </head>
 
   <body>
-    <div class="container">
-      <h1>Game Boy Discord Marketplace</h1>
-
-      <noscript>
-        Looks like you have JS disabled. This tool needs javascript to function!
-      </noscript>
-
-      This is the website for the Game Boy discord's marketplace. All the listings here are items pinned in the <code>#marketplace</code> channel.
-      <div id="app" >
-        <div>
-          <filtering :listings="listings" @filtered-listings-updated="updateFilteredListings"></filtering>
-        </div>
-        <hr>
-        <div>
-          <listing-card :ref="listing.messageId" v-on:close-all="closeAll" v-for="(listing, index) in filteredListings" :listing="listing" :key="listing.messageId"></listing-card>
-        </div>
-      </div>
-    </div>
-
-    <script src="script/app.js"></script>
+    Game Boy Discord Marketplace has moved to <a href="https://gameboy.github.io/marketplace/">https://gameboy.github.io/marketplace/</a>.<br>
+    Taking you there now...
   </body>
 </html>
